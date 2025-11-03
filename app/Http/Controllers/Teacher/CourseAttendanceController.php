@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers\Teacher;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\UpdateAttendanceRequest;
+use App\Models\Attendance;
+use App\Models\Course;
+
+class CourseAttendanceController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Course $course)
+    {
+        $course->load('classDays.attendances.student');
+
+        $percentageByStudent = $course->students->mapWithKeys(function ($student) use ($course) {
+            $totalClasses = $course->classDays->count();
+            $attendedClasses = $course->classDays->filter(function ($classDay) use ($student) {
+                $attendance = $classDay->attendances->where('student_id', $student->id)->first();
+
+                return $attendance && $attendance->present;
+            })->count();
+
+            $percentage = $totalClasses > 0 ? ($attendedClasses / $totalClasses) * 100 : 0;
+
+            return [$student->id => $percentage];
+        });
+
+        $percentageByDay = $course->classDays->mapWithKeys(function ($classDay) use ($course) {
+            $totalStudents = $course->students->count();
+            $presentCount = $classDay->attendances->where('present', true)->count();
+
+            $percentage = $totalStudents > 0 ? ($presentCount / $totalStudents) * 100 : 0;
+
+            return [$classDay->id => $percentage];
+        });
+
+        return view('teacher.courses.attendances.index', [
+            'course' => $course,
+            'class_days' => $course->classDays()->with('attendances.student')->get(),
+            'percentage_by_student' => $percentageByStudent,
+            'percentage_by_day' => $percentageByDay,
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreAttendanceRequest $request, Course $course)
+    {
+        $validated = $request->validated();
+
+        // Check if attendances for the given date already exist
+        if ($course->classDays()->where('date', $validated['class_date'])->exists()) {
+            return redirect()->back()
+                ->withErrors(['class_date' => __('Ya existen asistencias para esta fecha.')])
+                ->withInput();
+        }
+
+        $classDay = $course->classDays()->create([
+            'class_date' => $validated['class_date'],
+        ]);
+
+        foreach ($validated['attendances'] as $attendanceData) {
+            $attendance = $classDay->attendances()->make($attendanceData);
+            $attendance->student_id = $attendanceData['student_id'];
+            $attendance->save();
+        }
+
+        return redirect()->route('teacher.courses.attendances.index', $course)
+            ->with('success', __('Asistencias guardadas correctamente.'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Attendance $attendance)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Attendance $attendance)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateAttendanceRequest $request, Course $course, Attendance $attendance)
+    {
+        $attendance->update($request->validated());
+
+        return redirect()->route('teacher.courses.attendances.index', $course)
+            ->with('success', __('Asistencia actualizada correctamente.'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Attendance $attendance)
+    {
+        //
+    }
+}
