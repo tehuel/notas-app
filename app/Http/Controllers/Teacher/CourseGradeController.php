@@ -16,10 +16,37 @@ class CourseGradeController extends Controller
     public function index(Course $course)
     {
         $individualAssessments = $course->assessments()->individual()->get();
+        $headers = $individualAssessments->map(fn ($assessment) => [
+            'label' => $assessment->title,
+            'key' => (string) $assessment->id,
+            'url' => route('teacher.courses.assessments.show', [
+                'course' => $course->id,
+                'assessment' => $assessment->id,
+            ]),
+        ])->prepend([
+            'label' => __('Alumno'),
+            'key' => 'student',
+        ]);
+
+        $rows = $course->students->map(function ($student) use ($individualAssessments) {
+            $row = [
+                'student' => $student,
+            ];
+
+            foreach ($individualAssessments as $assessment) {
+                $row[$assessment->id] = $student->grades()
+                    ->where('assessment_id', $assessment->id)
+                    ->first();
+            }
+
+            return $row;
+        });
 
         return view('teacher.courses.grades.index', [
             'course' => $course,
             'individualAssessments' => $individualAssessments,
+            'headers' => $headers,
+            'rows' => $rows,
         ]);
     }
 

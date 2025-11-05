@@ -34,57 +34,15 @@
                     class="alert-link"
                 >
                     {{ __('Agregar evaluación') }}
-                </a>.
+                </a>
             </div>
         @else
-            <div class="table-responsive">
-                <table class="table table-striped m-0">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="min-width: 150px;">{{ __('Alumno') }}</th>
-                            @foreach ($individualAssessments as $assessment)
-                                <th scope="col">
-                                    <a
-                                        class="text-decoration-none"
-                                        href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}"
-                                        title="{{ __('Ver evaluación') }}"
-                                    >
-                                        {{ $assessment->title }}
-                                    </a>
-                                </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    @foreach ($course->students as $student)
-                        <tr>
-                            <th scope="row">
-                                <a
-                                    class="text-decoration-none text-nowrap"
-                                    href="{{ route('teacher.courses.students.show', [$course, $student]) }}"
-                                    title="{{ __('Ver alumno') }}"
-                                >
-                                    {{ $student->name }}
-                                </a>
-                            </th>
-                            @foreach($individualAssessments as $assessment)
-                                @php
-                                    $grade = $student->grades->firstWhere('assessment_id', $assessment->id);
-                                @endphp
-                                <td style="width: 250px;">
-                                    <div class="d-flex gap-2 align-items-center justify-content-between">
-                                        @include('teacher.courses.grades._grade_modal', [
-                                            'gradeable' => $student,
-                                            'assessment' => $assessment,
-                                        ])
-                                        <x-grade-label :$grade />
-                                    </div>
-                                </td>
-                            @endforeach
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
+            @include('teacher.courses.grades._index_table', [
+                'course' => $course,
+                'headers' => $headers,
+                'rows' => $rows,
+                'individualAssessments' => $individualAssessments,
+            ])
         @endif
-
     </div>
 </x-layouts.app>
