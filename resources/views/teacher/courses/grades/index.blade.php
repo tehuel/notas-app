@@ -72,11 +72,11 @@
                                 @endphp
                                 <td style="width: 250px;">
                                     <div class="d-flex gap-2 align-items-center justify-content-between">
-                                        <x-grade-label :$grade />
                                         @include('teacher.courses.grades._grade_modal', [
                                             'gradeable' => $student,
                                             'assessment' => $assessment,
                                         ])
+                                        <x-grade-label :$grade />
                                     </div>
                                 </td>
                             @endforeach
