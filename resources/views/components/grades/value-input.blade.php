@@ -30,6 +30,7 @@
             name="{{ $name }}"
             id="{{ $id }}-fail"
             autocomplete="off"
+            value="fail"
             @if (($grade?->value ?? '') === 'fail') checked @endif
         />
         <label class="btn btn-sm btn-outline-danger" for="{{ $id }}-fail">{{ __('Desaprobado') }}</label>
