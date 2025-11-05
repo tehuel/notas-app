@@ -11,8 +11,14 @@
 
     <div class="card my-3">
         <!-- Assessment Header -->
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h4 m-0 me-auto">{{ $assessment->title }}</h2>
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <i
+                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
+                    title="{{ __($assessment->type->label()) }}"
+                ></i>
+                <h2 class="h4 m-0 me-auto">{{ $assessment->title }}</h2>
+            </div>
             <a
                 class="btn btn-sm btn-primary"
                 href="{{ route('teacher.courses.assessments.edit', [$course, $assessment]) }}"
