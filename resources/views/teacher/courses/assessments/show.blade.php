@@ -74,14 +74,11 @@
                             <td><x-grade-label :$grade /></td>
                             <td>{{ $grade?->comment ?? '' }}</td>
                             <td>
-                                @include('teacher.courses.grades._grade_modal', [
-                                    'gradeable' => $student,
+                                @include('teacher.courses.grades._grade_actions', [
+                                    'course' => $course,
                                     'assessment' => $assessment,
+                                    'gradeable' => $student,
                                 ])
-
-                                <a href="{{ route('teacher.courses.students.history', [$course, $student, $assessment]) }}" class="btn btn-sm btn-link" title="{{ __('Ver Historial de Notas') }}">
-                                    <i class="bi bi-view-list"></i>
-                                </a>
                             </td>
                         </tr>
                     @endforeach
