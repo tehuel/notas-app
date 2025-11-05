@@ -24,6 +24,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
+        // TODO: move this to a middleware
+        if (! auth()->user()->isTeacher() && ! auth()->user()->isStudent()) {
+            return redirect()->route('index')->with('error', __('No tienes permiso para acceder al panel de control.'));
+        }
+
         return redirect()->route(auth()->user()->isTeacher() ? 'teacher.dashboard' : 'student.dashboard');
     })->name('dashboard');
 
