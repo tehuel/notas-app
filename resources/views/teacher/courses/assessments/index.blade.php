@@ -14,22 +14,27 @@
     <x-course-navbar :$course />
 
     <div class="card my-3">
-        <div class="card-header d-flex gap-3 align-items-center">
-            <h2 class="h4 m-0 me-auto">{{ __('Evaluaciones') }}</h2>
+        <div class="card-header">
+            <div class="row g-2">
+                <div class="col-12 col-sm">
+                    <h2 class="h4 m-0 me-auto">{{ __('Evaluaciones') }}</h2>
+                </div>
+                <div class="col-12 col-sm-auto d-flex flex-wrap gap-2 align-items-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="sortSwitch">
+                        <label class="form-check-label" for="sortSwitch">{{ __('Ordenar') }}</label>
+                    </div>
 
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="sortSwitch">
-              <label class="form-check-label" for="sortSwitch">{{ __('Ordenar') }}</label>
+                    <a
+                        class="btn btn-sm btn-primary"
+                        href="{{ route('teacher.courses.assessments.create', [$course]) }}"
+                        title="{{ __('Crear nueva evaluación') }}"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                        {{ __('Nuevo') }}
+                    </a>
+                </div>
             </div>
-
-            <a
-                class="btn btn-sm btn-primary"
-                href="{{ route('teacher.courses.assessments.create', [$course]) }}"
-                title="{{ __('Crear nueva evaluación') }}"
-            >
-                <i class="bi bi-plus-lg"></i>
-                {{ __('Nuevo') }}
-            </a>
         </div>
 
         @if($course->assessments->isEmpty())
@@ -51,12 +56,6 @@
                         data-pos="{{ $assessment->order }}"
                     >
                         <div class="row g-3 align-items-center">
-                            <div class="col col-md-auto">
-                                <i
-                                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
-                                    title="{{ __($assessment->type->label()) }}"
-                                ></i>
-                            </div>
                             <div class="col-12 col-md" style="position: relative;">
                                 <p class="m-0">
                                     <a href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}" class="stretched-link">
@@ -68,6 +67,14 @@
                                     {{ $assessment->description }}
                                 </p>
                             </div>
+
+                            <div class="col col-md-auto order-md-first">
+                                <i
+                                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
+                                    title="{{ __($assessment->type->label()) }}"
+                                ></i>
+                            </div>
+
                             <div class="col-auto text-md-end">
                                 @include('teacher.courses.assessments._item_actions', [$course, $assessment])
                             </div>

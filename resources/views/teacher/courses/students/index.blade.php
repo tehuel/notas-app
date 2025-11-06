@@ -14,29 +14,35 @@
     <x-course-navbar :$course />
 
     <div class="card my-3">
-        <div class="card-header d-flex gap-3 align-items-center">
-            <h2 class="h4 m-0 me-auto">{{ __('Alumnos') }}</h2>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="sortSwitch">
-                <label class="form-check-label" for="sortSwitch">{{ __('Ordenar') }}</label>
-            </div>
+        <div class="card-header">
+            <div class="row g-2">
+                <div class="col-12 col-sm">
+                    <h2 class="h4 m-0 me-auto">{{ __('Alumnos') }}</h2>
+                </div>
+                <div class="col-12 col-sm-auto d-flex flex-wrap gap-2 align-items-center">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="sortSwitch">
+                        <label class="form-check-label" for="sortSwitch">{{ __('Ordenar') }}</label>
+                    </div>
 
-            <a
-                class="btn btn-sm btn-primary"
-                href="{{ route('teacher.courses.students.create', [$course]) }}"
-                title="{{ __('Crear nuevo alumno') }}"
-            >
-                <i class="bi bi-plus-lg"></i>
-                {{ __('Nuevo') }}
-            </a>
-            <a
-                class="btn btn-sm btn-secondary"
-                href="{{ route('teacher.courses.students.associate', [$course]) }}"
-                title="{{ __('Asociar alumno existente') }}"
-            >
-                <i class="bi bi-person-check"></i>
-                {{ __('Asociar') }}
-            </a>
+                    <a
+                        class="btn btn-sm btn-primary"
+                        href="{{ route('teacher.courses.students.create', [$course]) }}"
+                        title="{{ __('Crear nuevo alumno') }}"
+                    >
+                        <i class="bi bi-plus-lg"></i>
+                        {{ __('Nuevo') }}
+                    </a>
+                    <a
+                        class="btn btn-sm btn-secondary"
+                        href="{{ route('teacher.courses.students.associate', [$course]) }}"
+                        title="{{ __('Asociar alumno existente') }}"
+                    >
+                        <i class="bi bi-person-check"></i>
+                        {{ __('Asociar') }}
+                    </a>
+                </div>
+            </div>
         </div>
 
         @if($course->students->isEmpty())
