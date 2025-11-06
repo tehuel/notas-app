@@ -21,9 +21,9 @@ class AttendanceFactory extends Factory
         return [
             'class_day_id' => ClassDay::factory(),
             'student_id' => Student::factory(),
-            'present' => $this->faker->boolean(80),
-            'status' => $this->faker->randomElement(['', 'late', 'excused']),
-            'note' => $this->faker->optional()->sentence(),
+            'present' => fake()->boolean(80),
+            'status' => fake()->randomElement(['', 'late', 'excused']),
+            'note' => fake()->optional()->sentence(),
         ];
     }
 }

@@ -18,9 +18,9 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'github_username' => $this->faker->userName,
+            'first_name' => fake()->firstName,
+            'last_name' => fake()->lastName,
+            'github_username' => fake()->userName,
             'user_id' => User::factory(), // Assuming Student has a user
         ];
     }

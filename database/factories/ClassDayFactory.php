@@ -18,7 +18,7 @@ class ClassDayFactory extends Factory
     public function definition(): array
     {
         return [
-            'class_date' => $this->faker->dateTimeBetween('-30 days', '+30 days'),
+            'class_date' => fake()->dateTimeBetween('-30 days', '+30 days'),
             'course_id' => Course::factory(),
         ];
     }
