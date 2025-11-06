@@ -20,7 +20,7 @@ class StudentFactory extends Factory
         return [
             'first_name' => fake()->firstName,
             'last_name' => fake()->lastName,
-            'github_username' => fake()->userName,
+            'github_username' => fake()->optional()->userName,
             'user_id' => User::factory(), // Assuming Student has a user
         ];
     }
