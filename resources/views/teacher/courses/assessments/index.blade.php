@@ -56,12 +56,6 @@
                         data-pos="{{ $assessment->order }}"
                     >
                         <div class="row g-3 align-items-center">
-                            <div class="col col-md-auto">
-                                <i
-                                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
-                                    title="{{ __($assessment->type->label()) }}"
-                                ></i>
-                            </div>
                             <div class="col-12 col-md" style="position: relative;">
                                 <p class="m-0">
                                     <a href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}" class="stretched-link">
@@ -73,6 +67,14 @@
                                     {{ $assessment->description }}
                                 </p>
                             </div>
+
+                            <div class="col col-md-auto order-md-first">
+                                <i
+                                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
+                                    title="{{ __($assessment->type->label()) }}"
+                                ></i>
+                            </div>
+
                             <div class="col-auto text-md-end">
                                 @include('teacher.courses.assessments._item_actions', [$course, $assessment])
                             </div>
