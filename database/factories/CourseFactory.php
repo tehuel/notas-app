@@ -16,12 +16,26 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
-        // division can be form 1ro to 7mo and from 1ra to 4ta. '3ro 1ra', '5to 2da', etc.
+        $subject = fake()->randomElement([
+            'Emprendimientos e Innovación Productiva',
+            'Evaluación de Proyectos',
+            'Modelos y Sistemas II',
+            'Organización y Métodos',
+            'Desarrollo de Software para Plataformas Móviles',
+            'Diseño e Implementación de Sitios Web',
+            'Prácticas Profesionalizantes',
+        ]);
         $division = fake()->randomElement(['1ro', '2do', '3ro', '4to', '5to', '6to', '7mo']).' '.fake()->randomElement(['1ra', '2da', '3ra', '4ta']);
-        $orientation = fake()->randomElement(['Programación', 'Informática', 'Redes', 'Electrónica']);
+        $orientation = fake()->randomElement([
+            'Programación',
+            'Informática',
+            'Redes',
+            'Electrónica'
+        ]);
         $year = fake()->numberBetween(now()->subYears(2)->year, now()->addYears(2)->year);
 
         return [
+            'subject' => $subject,
             'division' => $division,
             'orientation' => $orientation,
             'year' => $year,
