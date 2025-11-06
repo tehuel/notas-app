@@ -13,6 +13,7 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
+        'subject',
         'division',
         'orientation',
         'year',
@@ -25,7 +26,7 @@ class Course extends Model
 
     public function getColorAttribute(): string
     {
-        $hash = crc32($this->division.$this->orientation.$this->year);
+        $hash = crc32($this->subject.$this->division.$this->orientation.$this->year);
         $hue = $hash % 360; // Hue between 0 and 359
 
         return "hsl($hue, 70%, 50%)";
@@ -33,7 +34,7 @@ class Course extends Model
 
     public function getTitleAttribute(): string
     {
-        return "{$this->division} - {$this->orientation} ({$this->year})";
+        return "{$this->subject} - {$this->division}, {$this->orientation} ({$this->year})";
     }
 
     public function teachers(): BelongsToMany

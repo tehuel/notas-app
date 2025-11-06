@@ -24,15 +24,29 @@
             @endif
 
             <div class="mb-3">
-                <label for="division" class="form-label">
-                    {{ __('División') }}
+                <label for="subject" class="form-label">
+                    {{ __('Materia') }}
                 </label>
                 <input 
                     type="text" 
-                    name="division" 
-                    id="division" 
+                    name="subject"
+                    id="subject"
                     class="form-control" 
-                    value="{{ old('division', $course->division ?? '') }}" 
+                    value="{{ old('subject', $course->subject ?? '') }}"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="division" class="form-label">
+                    {{ __('División') }}
+                </label>
+                <input
+                    type="text"
+                    name="division"
+                    id="division"
+                    class="form-control"
+                    value="{{ old('division', $course->division ?? '') }}"
                     required
                 >
             </div>

@@ -9,7 +9,7 @@
 
     <div class="card my-3">
         <div class="card-header d-flex align-items-center">
-            <h2 class="h4 m-0 me-auto">{{ $course->title }}</h2>
+            <h2 class="h4 m-0 me-auto">{{ $course->subject }}</h2>
             <a
                 class="btn btn-sm btn-primary"
                 href="{{ route('teacher.courses.edit', [$course]) }}"

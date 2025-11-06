@@ -34,6 +34,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'subject' => 'required|string|max:255',
             'division' => 'required|string|max:255',
             'orientation' => 'required|string|max:255',
             'year' => 'required|string|max:255',
@@ -79,6 +80,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $validated = $request->validate([
+            'subject' => 'required|string|max:255',
             'division' => 'required|string|max:255',
             'orientation' => 'required|string|max:255',
             'year' => 'required|string|max:255',
