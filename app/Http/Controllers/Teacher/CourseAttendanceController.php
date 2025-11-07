@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\StoreSingleAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Course;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class CourseAttendanceController extends Controller
 {
@@ -92,21 +91,9 @@ class CourseAttendanceController extends Controller
     /**
      * Store a single attendance record for an existent class day.
      */
-    public function storeSingle(Request $request, Course $course)
+    public function storeSingle(StoreSingleAttendanceRequest $request, Course $course)
     {
-        $validated = $request->validate([
-            'student_id' => [
-                'required',
-                'integer',
-                'exists:students,id',
-                Rule::exists('course_student', 'student_id')
-                    ->where('course_id', $course->id),
-            ],
-            'class_date' => ['required', 'date'],
-            'present' => ['required', 'boolean'],
-            'status' => ['nullable', 'in:present,absent,excused'],
-            'note' => ['nullable', 'string', 'max:255'],
-        ]);
+        $validated = $request->validated();
 
         $classDay = $course->classDays()->whereDate('class_date', $validated['class_date'])->firstOrFail();
 
