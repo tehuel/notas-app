@@ -16,37 +16,23 @@ class CourseGradeController extends Controller
     public function index(Course $course)
     {
         $individualAssessments = $course->assessments()->individual()->get();
-        $headers = $individualAssessments->map(fn ($assessment) => [
-            'label' => $assessment->title,
-            'key' => (string) $assessment->id,
-            'url' => route('teacher.courses.assessments.show', [
-                'course' => $course->id,
-                'assessment' => $assessment->id,
-            ]),
-        ])->prepend([
-            'label' => __('Alumno'),
-            'key' => 'student',
-        ]);
+        $students = $course->students;
 
-        $rows = $course->students->map(function ($student) use ($individualAssessments) {
-            $row = [
-                'student' => $student,
-            ];
-
-            foreach ($individualAssessments as $assessment) {
-                $row[$assessment->id] = $student->grades()
-                    ->where('assessment_id', $assessment->id)
-                    ->first();
-            }
-
-            return $row;
-        });
+        // keyed by "gradable_id-assessment_id"
+        $grades = Grade::whereIn('assessment_id', $individualAssessments->pluck('id'))
+            ->whereIn('gradable_id', $students->pluck('id'))
+            ->where('gradable_type', Student::class)
+            ->get()
+            ->groupBy(function ($grade) {
+                return $grade->gradable_id.'-'.$grade->assessment_id;
+            })
+            ->map(fn ($group) => $group->first());
 
         return view('teacher.courses.grades.index', [
             'course' => $course,
-            'individualAssessments' => $individualAssessments,
-            'headers' => $headers,
-            'rows' => $rows,
+            'assessments' => $individualAssessments,
+            'students' => $students,
+            'grades' => $grades,
         ]);
     }
 

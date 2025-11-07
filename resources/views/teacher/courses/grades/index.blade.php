@@ -13,7 +13,7 @@
             <h2 class="h4 m-0 me-auto">{{ __('Notas') }}</h2>
         </div>
 
-        @if($course->students->isEmpty())
+        @if($students->isEmpty())
             <div class="alert alert-warning m-3">
                 {{ __('No hay alumnos en este curso.') }}
                 <a
@@ -26,7 +26,7 @@
                     class="alert-link"
                 >{{ __('Asociar alumnos') }}</a>.
             </div>
-        @elseif($individualAssessments->isEmpty())
+        @elseif($assessments->isEmpty())
             <div class="alert alert-warning m-3">
                 {{ __('No hay evaluaciones en este curso.') }}
                 <a
@@ -37,12 +37,52 @@
                 </a>
             </div>
         @else
-            @include('teacher.courses.grades._index_table', [
-                'course' => $course,
-                'headers' => $headers,
-                'rows' => $rows,
-                'individualAssessments' => $individualAssessments,
-            ])
+            <x-table>
+                <x-slot:headers>
+                    <tr>
+                        <th scope="col">
+                            {{ __('Alumno') }}
+                        </th>
+                        @foreach ($assessments as $assessment)
+                            <th scope="col">
+                                <a href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}">
+                                    {{ $assessment->title }}
+                                </a>
+                            </th>
+                        @endforeach
+                    </tr>
+                </x-slot:headers>
+
+                <x-slot:rows>
+                    @foreach ($students as $student)
+                        <tr>
+                            <td>
+                                <a href="{{ route('teacher.courses.students.show', [ 'course' => $course, 'student' => $student ]) }}">
+                                    {{ $student->name }}
+                                </a>
+                            </td>
+
+                            @foreach ($assessments as $assessment)
+                                <td class="align-middle">
+                                    @php
+                                        // get grade keyed by "gradable_id-assessment_id"
+                                        $gradeKey = $student->id . '-' . $assessment->id;
+                                        $grade = $grades[$gradeKey] ?? null;
+                                    @endphp
+
+                                    <x-grade-label :grade="$grade" />
+
+                                    @include('teacher.courses.grades._grade_actions', [
+                                        'course' => $course,
+                                        'assessment' => $assessment,
+                                        'gradeable' => $student,
+                                    ])
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </x-slot:rows>
+            </x-table>
         @endif
     </div>
 </x-layouts.app>

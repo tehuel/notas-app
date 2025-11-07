@@ -1,3 +1,9 @@
+@props([
+    'course',
+    'assessment',
+    'gradeable',
+])
+
 <span>
     <button
         type="button"
@@ -34,6 +40,7 @@
                 <div class="modal-body">
                     <x-grades.form 
                         :id="'gradeable-' . $gradeable->id . '-assessment-' . $assessment->id"
+                        :course="$course"
                         :assessment="$assessment" 
                         :gradeable="$gradeable" 
                     />

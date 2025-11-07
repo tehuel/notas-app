@@ -1,7 +1,14 @@
+@props([
+    'id',
+    'course',
+    'assessment',
+    'gradeable',
+])
+
 <form 
     id="grade-form-{{ $id }}"
     method="POST" 
-    action="{{ route('teacher.courses.grades.store', ['course' => $assessment->course]) }}"
+    action="{{ route('teacher.courses.grades.store', ['course' => $course]) }}"
 >
     @csrf
     <input type="hidden" name="assessment_id" value="{{ $assessment->id }}">
