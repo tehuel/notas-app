@@ -30,7 +30,7 @@ class CourseFactory extends Factory
             'Programación',
             'Informática',
             'Redes',
-            'Electrónica'
+            'Electrónica',
         ]);
         $year = fake()->numberBetween(now()->subYears(2)->year, now()->addYears(2)->year);
 
