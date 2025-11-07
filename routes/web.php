@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('students/sort/', [CourseStudentController::class, 'sort'])->name('students.sort');
             Route::resource('students', CourseStudentController::class);
 
+            Route::post('attendances/storeSingle', [CourseAttendanceController::class, 'storeSingle'])->name('attendances.storeSingle');
             Route::resource('attendances', CourseAttendanceController::class);
         });
     });

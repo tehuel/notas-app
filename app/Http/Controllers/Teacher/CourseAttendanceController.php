@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Course;
+use Illuminate\Http\Request;
 
 class CourseAttendanceController extends Controller
 {
@@ -112,10 +113,25 @@ class CourseAttendanceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Store a single attendance record for an existent class day.
      */
-    public function destroy(Attendance $attendance)
+    public function storeSingle(Request $request, Course $course)
     {
-        //
+        $validated = $request->validate([
+            'student_id' => ['required', 'integer', 'exists:students,id'],
+            'class_date' => ['required', 'date'],
+            'present' => ['required', 'boolean'],
+            'status' => ['nullable', 'in:present,absent,excused'],
+            'note' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $classDay = $course->classDays()->whereDate('class_date', $validated['class_date'])->firstOrFail();
+
+        $attendance = $classDay->attendances()->make($validated);
+        $attendance->student_id = $validated['student_id'];
+        $attendance->save();
+
+        return redirect()->route('teacher.courses.attendances.index', $course)
+            ->with('success', __('Asistencia guardada correctamente.'));
     }
 }
