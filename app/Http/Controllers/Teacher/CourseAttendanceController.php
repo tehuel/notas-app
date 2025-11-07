@@ -16,10 +16,11 @@ class CourseAttendanceController extends Controller
     public function index(Course $course)
     {
         $course->load('classDays.attendances.student');
+        $classDays = $course->classDays;
 
-        $percentageByStudent = $course->students->mapWithKeys(function ($student) use ($course) {
-            $totalClasses = $course->classDays->count();
-            $attendedClasses = $course->classDays->filter(function ($classDay) use ($student) {
+        $percentageByStudent = $course->students->mapWithKeys(function ($student) use ($classDays) {
+            $totalClasses = $classDays->count();
+            $attendedClasses = $classDays->filter(function ($classDay) use ($student) {
                 $attendance = $classDay->attendances->where('student_id', $student->id)->first();
 
                 return $attendance && $attendance->present;
@@ -30,7 +31,7 @@ class CourseAttendanceController extends Controller
             return [$student->id => $percentage];
         });
 
-        $percentageByDay = $course->classDays->mapWithKeys(function ($classDay) use ($course) {
+        $percentageByDay = $classDays->mapWithKeys(function ($classDay) use ($course) {
             $totalStudents = $course->students->count();
             $presentCount = $classDay->attendances->where('present', true)->count();
 
@@ -41,7 +42,7 @@ class CourseAttendanceController extends Controller
 
         return view('teacher.courses.attendances.index', [
             'course' => $course,
-            'class_days' => $course->classDays()->with('attendances.student')->get(),
+            'class_days' => $classDays,
             'percentage_by_student' => $percentageByStudent,
             'percentage_by_day' => $percentageByDay,
         ]);
