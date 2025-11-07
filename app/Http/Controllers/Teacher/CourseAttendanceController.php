@@ -110,6 +110,13 @@ class CourseAttendanceController extends Controller
 
         $classDay = $course->classDays()->whereDate('class_date', $validated['class_date'])->firstOrFail();
 
+        // check if an attendance already exists for the student on the given date
+        if ($classDay->attendances()->where('student_id', $validated['student_id'])->exists()) {
+            return redirect()->back()
+                ->withErrors(['student_id' => __('Ya existe un registro de asistencia para este estudiante en este día.')])
+                ->withInput();
+        }
+
         $attendance = $classDay->attendances()->make($validated);
         $attendance->student_id = $validated['student_id'];
         $attendance->save();
