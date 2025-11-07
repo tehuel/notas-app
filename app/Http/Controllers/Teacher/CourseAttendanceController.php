@@ -50,14 +50,6 @@ class CourseAttendanceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAttendanceRequest $request, Course $course)
@@ -83,22 +75,6 @@ class CourseAttendanceController extends Controller
 
         return redirect()->route('teacher.courses.attendances.index', $course)
             ->with('success', __('Asistencias guardadas correctamente.'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attendance $attendance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attendance $attendance)
-    {
-        //
     }
 
     /**
