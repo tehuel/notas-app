@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAttendanceRequest;
+use App\Http\Requests\StoreSingleAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Course;
@@ -49,14 +50,6 @@ class CourseAttendanceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAttendanceRequest $request, Course $course)
@@ -64,7 +57,7 @@ class CourseAttendanceController extends Controller
         $validated = $request->validated();
 
         // Check if attendances for the given date already exist
-        if ($course->classDays()->where('date', $validated['class_date'])->exists()) {
+        if ($course->classDays()->whereDate('class_date', $validated['class_date'])->exists()) {
             return redirect()->back()
                 ->withErrors(['class_date' => __('Ya existen asistencias para esta fecha.')])
                 ->withInput();
@@ -85,22 +78,6 @@ class CourseAttendanceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Attendance $attendance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attendance $attendance)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAttendanceRequest $request, Course $course, Attendance $attendance)
@@ -112,10 +89,28 @@ class CourseAttendanceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Store a single attendance record for an existent class day.
      */
-    public function destroy(Attendance $attendance)
+    public function storeSingle(StoreSingleAttendanceRequest $request, Course $course)
     {
-        //
+        $validated = $request->validated();
+
+        $classDay = $course->classDays()
+            ->whereDate('class_date', $validated['class_date'])
+            ->firstOrFail();
+
+        // check if an attendance already exists for the student on the given date
+        if ($classDay->attendances()->where('student_id', $validated['student_id'])->exists()) {
+            return redirect()->back()
+                ->withErrors(['student_id' => __('Ya existe un registro de asistencia para este estudiante en este día.')])
+                ->withInput();
+        }
+
+        $attendance = $classDay->attendances()->make($validated);
+        $attendance->student()->associate($validated['student_id']);
+        $attendance->save();
+
+        return redirect()->route('teacher.courses.attendances.index', $course)
+            ->with('success', __('Asistencia guardada correctamente.'));
     }
 }

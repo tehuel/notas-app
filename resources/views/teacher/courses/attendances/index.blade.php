@@ -79,22 +79,17 @@
                                             >
                                                 {{ $attendance->present ? __('Presente') : __('Ausente') }}
                                             </span>
-                                            {{-- form to edit attendance --}}
-                                            <form 
-                                                class="d-inline"
-                                                action="{{ route('teacher.courses.attendances.update', [$course, $attendance]) }}" 
-                                                method="POST"
-                                            >
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="present" value="{{ $attendance->present ? '0' : '1' }}">
-                                                <button type="submit" class="btn btn-sm btn-link p-0" title="{{ $attendance->present ? __('Marcar como ausente') : __('Marcar como presente') }}">
-                                                    <i class="bi {{ $attendance->present ? 'bi-x-circle' : 'bi-check-circle' }}"></i>
-                                                </button>
-                                            </form>
                                         @else
                                             {{ __('No registrado') }}
                                         @endif
+
+                                        {{-- form to edit attendance --}}
+                                        @include('teacher.courses.attendances._single_form', [
+                                            'course' => $course,
+                                            'student' => $student,
+                                            'class_day' => $class_day,
+                                            'attendance' => $attendance,
+                                        ])
                                     </td>
                                 @endforeach
                             </tr>
