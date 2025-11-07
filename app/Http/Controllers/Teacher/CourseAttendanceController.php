@@ -105,7 +105,7 @@ class CourseAttendanceController extends Controller
         }
 
         $attendance = $classDay->attendances()->make($validated);
-        $attendance->student_id = $validated['student_id'];
+        $attendance->student()->associate($validated['student_id']);
         $attendance->save();
 
         return redirect()->route('teacher.courses.attendances.index', $course)
