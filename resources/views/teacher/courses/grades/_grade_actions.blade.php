@@ -6,7 +6,11 @@
 
 <div>
     <!-- show modal to add a new grade -->
-    <x-grades.modal :assessment="$assessment" :gradeable="$gradeable" />
+    <x-grades.modal
+        :course="$course"
+        :assessment="$assessment" 
+        :gradeable="$gradeable"
+    />
 
     <!-- show button to go to history of grades -->
     <a
