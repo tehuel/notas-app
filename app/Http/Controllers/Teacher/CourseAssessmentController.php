@@ -32,6 +32,7 @@ class CourseAssessmentController extends Controller
             'description' => 'nullable|string',
             'type' => ['nullable', new Enum(AssessmentTypeEnum::class)],
             'grade_type' => ['required', new Enum(GradeTypeEnum::class)],
+            'checks' => 'nullable|array',
         ]);
 
         $course->assessments()->create($validated);
@@ -105,6 +106,7 @@ class CourseAssessmentController extends Controller
             'description' => 'nullable|string',
             'type' => ['nullable', new Enum(AssessmentTypeEnum::class)],
             'grade_type' => ['required', new Enum(GradeTypeEnum::class)],
+            'checks' => 'nullable|array',
         ]);
 
         $assessment->update($validated);

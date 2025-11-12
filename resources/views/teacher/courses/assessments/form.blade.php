@@ -1,5 +1,6 @@
 @use(App\Enums\GradeTypeEnum)
 @use(App\Enums\AssessmentTypeEnum)
+@use(App\Enums\CheckTypeEnum)
 
 <x-layouts.app
     :breadcrumbs="[
