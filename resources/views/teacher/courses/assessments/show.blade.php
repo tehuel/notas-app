@@ -13,10 +13,6 @@
         <!-- Assessment Header -->
         <div class="card-header d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
-                <i
-                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
-                    title="{{ __($assessment->type->label()) }}"
-                ></i>
                 <h2 class="h4 m-0 me-auto">{{ $assessment->title }}</h2>
             </div>
             <a
@@ -34,24 +30,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <p class="m-0">
-                        <strong>{{ __('Tipo de nota:') }}</strong>
+                        <strong>{{ __('Nota:') }}</strong>
+                        <i class="{{ $assessment->grade_type->icon() }}"></i>
                         {{ __($assessment->grade_type->label()) }}
                     </p>
                     <p class="m-0">
-                        <strong>{{ __('Tipo de evaluación:') }}</strong>
+                        <strong>{{ __('Tipo:') }}</strong>
+                        <i class="{{ $assessment->type->icon() }}"></i>
                         {{ __($assessment->type->label()) }}
-                    </p>
-                    <p class="m-0">
-                        @if (empty($assessment->description))
-                            <span class="text-muted fst-italic"><small>{{ __('Sin descripción') }}</small></span>
-                        @else
-                            <span>{{ $assessment->description }}</span>
-                        @endif
                     </p>
                 </div>
                 <div class="col-md-6">
                     <p class="m-0">
-                        <strong>{{ __('Verificaciones Automáticas:') }}</strong>
+                        <strong>{{ __('Verificaciones:') }}</strong>
                         @if (empty($assessment->checks))
                             <span class="text-muted fst-italic"><small>{{ __('Ninguna') }}</small></span>
                         @else
@@ -64,6 +55,7 @@
                                     @endphp
                                     @if ($enabled)
                                         <li class="mb-1">
+                                            <i class="{{ $checkType->icon() }}"></i>
                                             {{ __($checkType->label()) }}
                                         </li>
                                     @endif
@@ -73,6 +65,14 @@
                     </p>
                 </div>
             </div>
+        </div>
+
+        <div class="card-body border-top">
+            @if ($assessment->description)
+                {{ $assessment->description }}
+            @else
+                <span class="text-muted fst-italic"><small>{{ __('Sin descripción') }}</small></span>
+            @endif
         </div>
     </div>
 
