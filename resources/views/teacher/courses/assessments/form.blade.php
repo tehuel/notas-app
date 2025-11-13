@@ -86,7 +86,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="checks" class="form-label">{{ __('Verificaciones Automáticas') }}</label>
+                <label class="form-label">{{ __('Verificaciones Automáticas') }}</label>
                 <ul class="list-group">
                     @foreach (CheckTypeEnum::cases() as $checkType)
                         <li class="list-group-item">
