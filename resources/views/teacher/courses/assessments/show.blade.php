@@ -9,7 +9,7 @@
 >
     <x-course-navbar :$course />
 
-    <div class="card my-3">
+    <div class="card mb-5">
         <!-- Assessment Header -->
         <div class="card-header d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3">
@@ -67,6 +67,7 @@
             </div>
         </div>
 
+        <!-- Assessment Description -->
         <div class="card-body border-top">
             @if ($assessment->description)
                 {{ $assessment->description }}
@@ -78,17 +79,18 @@
 
     @switch($assessment->type)
         @case(\App\Enums\AssessmentTypeEnum::Individual)
+            <h2 class="h4">{{ __('Notas de Estudiantes') }}</h2>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>{{ __('Alumno') }}</th>
-                            <th>
+                            <th scope="col">{{ __('Alumno') }}</th>
+                            <th scope="col">
                                 {{ __('Nota') }}
-                                <small class="text-muted">({{ __($assessment->grade_type->label()) }})</small>
+                                <i class="{{ $assessment->grade_type->icon() }} me-2" title="{{ __($assessment->grade_type->label()) }}"></i>
                             </th>
-                            <th>{{ __('Comentario') }}</th>
-                            <th>{{ __('Acciones') }}</th>
+                            <th scope="col">{{ __('Comentario') }}</th>
+                            <th scope="col">{{ __('Acciones') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +99,15 @@
                             $grade = $student->grades->first();
                         @endphp
                         <tr>
-                            <td>{{ $student->name }}</td>
+                            <th scope="row">
+                                <a
+                                    href="{{ route('teacher.courses.students.show', [ 'course' => $course, 'student' => $student ]) }}"
+                                    title="{{ __('Ver perfil del alumno') }}"
+                                    class="text-decoration-none"
+                                >
+                                    {{ $student->name }}
+                                </a>
+                            </th>
                             <td><x-grade-label :$grade /></td>
                             <td>{{ $grade?->comment ?? '' }}</td>
                             <td>
@@ -115,7 +125,7 @@
             @break
 
         @case(\App\Enums\AssessmentTypeEnum::Group)
-            <h2 class="h4 my-3">{{ __('Grupos de Estudiantes') }}</h2>
+            <h2 class="h4">{{ __('Grupos de Estudiantes') }}</h2>
             <a href="{{ route('teacher.courses.assessments.groups.create', [$course, $assessment]) }}" class="btn btn-primary mb-3">
                 <i class="bi bi-people-fill"></i>
                 {{ __('Administrar Grupos') }}
