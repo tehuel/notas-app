@@ -12,4 +12,13 @@ enum GradeTypeEnum: string
     {
         return "messages.grade_type.$this->value";
     }
+
+    public function icon(): string
+    {
+        return match ($this) {
+            self::Numeric => 'bi bi-hash',
+            self::PassFail => 'bi bi-check2-square',
+            self::Semaphore => 'bi bi-stoplights',
+        };
+    }
 }
