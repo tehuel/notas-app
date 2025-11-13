@@ -66,23 +66,26 @@
             <div class="mb-3">
                 <label for="type" class="form-label">{{ __('Tipo de Evaluación') }}</label>
 
-                <div class="list-group">
+                <ul class="list-group">
                     @foreach(AssessmentTypeEnum::cases() as $assessment_type)
-                        <label class="list-group-item d-flex gap-2">
-                            <input
-                                class="form-check-input flex-shrink-0"
-                                type="radio"
-                                name="type"
-                                id="type_{{ $assessment_type->value }}"
-                                value="{{ $assessment_type->value }}"
-                                @if(old('type', $assessment->type ?? '') === $assessment_type) checked @endif
-                            >
-                            <span>
-                                {{ __($assessment_type->label()) }}
-                            </span>
-                        </label>
+                        <li class="list-group-item">
+                            <label class="d-flex gap-2">
+                                <input
+                                    class="form-check-input flex-shrink-0"
+                                    type="radio"
+                                    name="type"
+                                    id="type_{{ $assessment_type->value }}"
+                                    value="{{ $assessment_type->value }}"
+                                    @if(old('type', $assessment->type ?? '') === $assessment_type) checked @endif
+                                >
+                                <span>
+                                    <i class="{{ $assessment_type->icon() }} me-1"></i>
+                                    {{ __($assessment_type->label()) }}
+                                </span>
+                            </label>
+                        </li>
                     @endforeach
-                </div>
+                </ul>
             </div>
 
             <div class="mb-3">
