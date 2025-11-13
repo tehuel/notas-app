@@ -85,6 +85,34 @@
                 </div>
             </div>
 
+            <div class="mb-3">
+                <label for="checks" class="form-label">{{ __('Verificaciones Automáticas') }}</label>
+                <ul class="list-group">
+                    @foreach (CheckTypeEnum::cases() as $checkType)
+                        <div class="list-group-item">
+                            <div class="row align-items-center g-2">
+                                <div class="col-auto">
+                                    <input type="hidden" name="checks[{{ $checkType->value }}][enabled]" value="0">
+                                    <input
+                                        class="form-check-input flex-shrink-0"
+                                        type="checkbox"
+                                        name="checks[{{ $checkType->value }}][enabled]"
+                                        id="check_{{ $checkType->value }}"
+                                        value="1"
+                                        @if(old('checks.' . $checkType->value . '.enabled', $assessment->checks[$checkType->value]['enabled'] ?? false)) checked @endif
+                                    >
+                                </div>
+                                <div class="col">
+                                    <label class="form-check-label flex-shrink-0" for="check_{{ $checkType->value }}">
+                                        {{ __($checkType->label()) }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </ul>
+            </div>
+
             <button type="submit" class="btn btn-primary">
                 {{ $submitLabel ?? (isset($assessment) ? __('Actualizar') : __('Crear')) }}
             </button>
