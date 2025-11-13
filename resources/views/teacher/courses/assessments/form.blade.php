@@ -104,6 +104,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-check-label flex-shrink-0" for="check_{{ $checkType->value }}">
+                                        <i class="bi bi-{{ $checkType->icon() }} me-1"></i>
                                         {{ __($checkType->label()) }}
                                     </label>
                                 </div>
