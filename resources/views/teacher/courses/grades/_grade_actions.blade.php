@@ -19,7 +19,7 @@
             'assessment' => $assessment,
             'student' => $gradeable,
         ]) }}"
-        class="btn btn-sm btn-link"
+        class="btn btn-sm"
         title="{{ __('Historial de calificaciones') }}"
     >
         <i class="bi bi-view-list"></i>
