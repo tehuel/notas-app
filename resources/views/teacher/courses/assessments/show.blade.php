@@ -58,8 +58,9 @@
                             <ul class="mb-0">
                                 @foreach ($assessment->checks as $checkKey => $checkData)
                                     @php
-                                        $checkType = \App\Enums\CheckTypeEnum::from($checkKey);
+                                        $checkType = \App\Enums\CheckTypeEnum::tryFrom($checkKey);
                                         $enabled = $checkData['enabled'] ?? false;
+                                        if (!$checkType) continue;
                                     @endphp
                                     @if ($enabled)
                                         <li class="mb-1">
