@@ -65,7 +65,7 @@
                                     @if(old('grade_type', $assessment->grade_type ?? '') === $grade_type) checked @endif
                                 >
                                 <span>
-                                    <i class="{{ $grade_type->icon() }} me-1"></i>
+                                    <i class="{{ $grade_type->icon() }} me-1" title="{{ __($grade_type->label()) }}"></i>
                                     {{ __($grade_type->label()) }}
                                 </span>
                             </label>
