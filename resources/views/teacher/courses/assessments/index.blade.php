@@ -56,27 +56,66 @@
                         data-pos="{{ $assessment->order }}"
                     >
                         <div class="row g-3 align-items-center">
-                            <div class="col-12 col-md" style="position: relative;">
-                                <p class="m-0">
-                                    <a href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}" class="stretched-link">
-                                        <span class="lead">{{ $assessment->title }}</span>
-                                    </a>
-                                    <small class="text-muted fst-italic">{{ __($assessment->grade_type->label()) }}</small>
-                                </p>
-                                <p class="m-0">
-                                    {{ $assessment->description }}
-                                </p>
-                            </div>
-
-                            <div class="col col-md-auto order-md-first">
+                            <div class="col-auto">
                                 <i
-                                    class="bi bi-{{ $assessment->type === \App\Enums\AssessmentTypeEnum::Individual ? 'person-fill' : 'people-fill' }}"
+                                    class="{{ $assessment->type->icon() }} me-2"
                                     title="{{ __($assessment->type->label()) }}"
+                                ></i>
+                                <i 
+                                    class="{{ $assessment->grade_type->icon() }}"
+                                    title="{{ __($assessment->grade_type->label()) }}"
                                 ></i>
                             </div>
 
-                            <div class="col-auto text-md-end">
-                                @include('teacher.courses.assessments._item_actions', [$course, $assessment])
+                            <div class="col text-truncate" style="position: relative;">
+                                <p class="mb-0 text-truncate">
+                                    <a
+                                        href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}"
+                                        class="text-decoration-none stretched-link"
+                                    >
+                                        {{ $assessment->title }}
+                                    </a>
+                                    <span class="text-muted mb-0">
+                                        {{ $assessment->description }}
+                                    </span>
+                                </p>
+                            </div>
+
+                            <!-- Actions dropdown -->
+                            <div class="col-auto">
+                                <button
+                                    class="btn btn-sm rounded-circle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a
+                                            href="{{ route('teacher.courses.assessments.edit', [$course, $assessment]) }}"
+                                            class="dropdown-item"
+                                        >
+                                            <i class="bi bi-pencil"></i>
+                                            {{ __('Editar') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ route('teacher.courses.assessments.destroy', [$course, $assessment]) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <button
+                                                type="submit"
+                                                class="dropdown-item text-danger"
+                                                onclick="return confirm('{{ __('¿Estás seguro de eliminar esta evaluación?') }}')"
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                                {{ __('Eliminar') }}
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </li>
