@@ -31,21 +31,48 @@
 
         <!-- Assessment Details -->
         <div class="card-body">
-            <p class="m-0">
-                <strong>{{ __('Tipo de nota:') }}</strong>
-                {{ __($assessment->grade_type->label()) }}
-            </p>
-            <p class="m-0">
-                <strong>{{ __('Tipo de evaluación:') }}</strong>
-                {{ __($assessment->type->label()) }}
-            </p>
-            <p class="m-0">
-                @if (empty($assessment->description))
-                    <span class="text-muted fst-italic"><small>{{ __('Sin descripción') }}</small></span>
-                @else
-                    <span>{{ $assessment->description }}</span>
-                @endif
-            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="m-0">
+                        <strong>{{ __('Tipo de nota:') }}</strong>
+                        {{ __($assessment->grade_type->label()) }}
+                    </p>
+                    <p class="m-0">
+                        <strong>{{ __('Tipo de evaluación:') }}</strong>
+                        {{ __($assessment->type->label()) }}
+                    </p>
+                    <p class="m-0">
+                        @if (empty($assessment->description))
+                            <span class="text-muted fst-italic"><small>{{ __('Sin descripción') }}</small></span>
+                        @else
+                            <span>{{ $assessment->description }}</span>
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="m-0">
+                        <strong>{{ __('Verificaciones Automáticas:') }}</strong>
+                        @if (empty($assessment->checks))
+                            <span class="text-muted fst-italic"><small>{{ __('Ninguna') }}</small></span>
+                        @else
+                            <ul class="mb-0">
+                                @foreach ($assessment->checks as $checkKey => $checkData)
+                                    @php
+                                        $checkType = \App\Enums\CheckTypeEnum::tryFrom($checkKey);
+                                        $enabled = $checkData['enabled'] ?? false;
+                                        if (!$checkType) continue;
+                                    @endphp
+                                    @if ($enabled)
+                                        <li class="mb-1">
+                                            {{ __($checkType->label()) }}
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @endif
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 

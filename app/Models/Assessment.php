@@ -20,11 +20,13 @@ class Assessment extends Model
         'type',
         'grade_type',
         'order',
+        'checks',
     ];
 
     protected $casts = [
         'type' => AssessmentTypeEnum::class,
         'grade_type' => GradeTypeEnum::class,
+        'checks' => 'array',
     ];
 
     public function course(): BelongsTo
