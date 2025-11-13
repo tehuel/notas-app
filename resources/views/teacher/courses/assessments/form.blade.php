@@ -28,7 +28,7 @@
             @endif
 
             <div class="mb-3">
-                <label for="title" class="form-label">{{ __('Titlo') }}</label>
+                <label for="title" class="form-label">{{ __('Título') }}</label>
                 <input
                     type="text"
                     name="title"
