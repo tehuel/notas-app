@@ -14,12 +14,12 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-const COURSES_COUNT = 3;
+const COURSES_COUNT = 1;
 const TEACHERS_COUNT = 2;
-const STUDENTS_COUNT = 30;
-const ASSESSMENTS_COUNT = 15;
-const GRADES_COUNT = 15;
-const CLASSDAYS_COUNT = 10;
+const STUDENTS_COUNT = 5;
+const ASSESSMENTS_COUNT = 5;
+const GRADES_COUNT = 5;
+const CLASSDAYS_COUNT = 3;
 
 class DatabaseSeeder extends Seeder
 {
