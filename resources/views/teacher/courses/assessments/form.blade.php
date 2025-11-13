@@ -89,7 +89,7 @@
                 <label for="checks" class="form-label">{{ __('Verificaciones Automáticas') }}</label>
                 <ul class="list-group">
                     @foreach (CheckTypeEnum::cases() as $checkType)
-                        <div class="list-group-item">
+                        <li class="list-group-item">
                             <div class="row align-items-center g-2">
                                 <div class="col-auto">
                                     <input type="hidden" name="checks[{{ $checkType->value }}][enabled]" value="0">
@@ -116,7 +116,7 @@
                                     >
                                 </div>
                             </div>
-                        </div>
+                        </li>
                     @endforeach
                 </ul>
             </div>
