@@ -51,16 +51,26 @@
 
             <div class="mb-3">
                 <label for="grade_type" class="form-label">{{ __('Tipo de Nota') }}</label>
-                <select name="grade_type" class="form-select" aria-label="{{ __('Tipo de Nota') }}">
+
+                <ul class="list-group mb-2">
                     @foreach(GradeTypeEnum::cases() as $grade_type)
-                        <option
-                            value="{{ $grade_type->value }}"
-                            {{ old('grade_type', $assessment->grade_type ?? '') === $grade_type ? 'selected' : '' }}
-                        >
-                            {{ __($grade_type->label()) }}
-                        </option>
+                        <li class="list-group-item">
+                            <label class="d-flex gap-2">
+                                <input
+                                    class="form-check-input flex-shrink-0"
+                                    type="radio"
+                                    name="grade_type"
+                                    id="grade_type_{{ $grade_type->value }}"
+                                    value="{{ $grade_type->value }}"
+                                    @if(old('grade_type', $assessment->grade_type ?? '') === $grade_type) checked @endif
+                                >
+                                <span>
+                                    {{ __($grade_type->label()) }}
+                                </span>
+                            </label>
+                        </li>
                     @endforeach
-                </select>
+                </ul>
             </div>
 
             <div class="mb-3">
