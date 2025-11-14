@@ -7,7 +7,7 @@
 <span>
     <button
         type="button"
-        class="btn btn-sm btn-link"
+        class="btn btn-sm"
         title="{{ __('Corregir') }}"
         data-bs-toggle="modal"
         data-bs-target="#modal-{{ $gradeable->id }}-{{ $assessment->id }}"

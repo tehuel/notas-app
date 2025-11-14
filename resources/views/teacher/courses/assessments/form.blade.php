@@ -51,38 +51,58 @@
 
             <div class="mb-3">
                 <label for="grade_type" class="form-label">{{ __('Tipo de Nota') }}</label>
-                <select name="grade_type" class="form-select" aria-label="{{ __('Tipo de Nota') }}">
+
+                <ul class="list-group mb-2">
                     @foreach(GradeTypeEnum::cases() as $grade_type)
-                        <option
-                            value="{{ $grade_type->value }}"
-                            {{ old('grade_type', $assessment->grade_type ?? '') === $grade_type ? 'selected' : '' }}
-                        >
-                            {{ __($grade_type->label()) }}
-                        </option>
+                        <li class="list-group-item">
+                            <label class="d-flex gap-2">
+                                <input
+                                    class="form-check-input flex-shrink-0"
+                                    type="radio"
+                                    name="grade_type"
+                                    id="grade_type_{{ $grade_type->value }}"
+                                    value="{{ $grade_type->value }}"
+                                    @if(old('grade_type', $assessment->grade_type ?? '') === $grade_type) checked @endif
+                                >
+                                <span>
+                                    <i
+                                        class="{{ $grade_type->icon() }} me-1"
+                                        title="{{ __($grade_type->label()) }}"
+                                    ></i>
+                                    {{ __($grade_type->label()) }}
+                                </span>
+                            </label>
+                        </li>
                     @endforeach
-                </select>
+                </ul>
             </div>
 
             <div class="mb-3">
                 <label for="type" class="form-label">{{ __('Tipo de Evaluación') }}</label>
 
-                <div class="list-group">
+                <ul class="list-group">
                     @foreach(AssessmentTypeEnum::cases() as $assessment_type)
-                        <label class="list-group-item d-flex gap-2">
-                            <input
-                                class="form-check-input flex-shrink-0"
-                                type="radio"
-                                name="type"
-                                id="type_{{ $assessment_type->value }}"
-                                value="{{ $assessment_type->value }}"
-                                @if(old('type', $assessment->type ?? '') === $assessment_type) checked @endif
-                            >
-                            <span>
-                                {{ __($assessment_type->label()) }}
-                            </span>
-                        </label>
+                        <li class="list-group-item">
+                            <label class="d-flex gap-2">
+                                <input
+                                    class="form-check-input flex-shrink-0"
+                                    type="radio"
+                                    name="type"
+                                    id="type_{{ $assessment_type->value }}"
+                                    value="{{ $assessment_type->value }}"
+                                    @if(old('type', $assessment->type ?? '') === $assessment_type) checked @endif
+                                >
+                                <span>
+                                    <i 
+                                        class="{{ $assessment_type->icon() }} me-1"
+                                        title="{{ __($assessment_type->label()) }}"
+                                    ></i>
+                                    {{ __($assessment_type->label()) }}
+                                </span>
+                            </label>
+                        </li>
                     @endforeach
-                </div>
+                </ul>
             </div>
 
             <div class="mb-3">
@@ -104,6 +124,10 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-check-label flex-shrink-0" for="check_{{ $checkType->value }}">
+                                        <i
+                                            class="{{ $checkType->icon() }} me-1"
+                                            title="{{ __($checkType->label()) }}"
+                                        ></i>
                                         {{ __($checkType->label()) }}
                                     </label>
                                 </div>

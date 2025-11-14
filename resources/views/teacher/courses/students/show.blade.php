@@ -59,10 +59,23 @@
                         $grade = $student->grades->where('assessment_id', $assessment->id)->first();
                     @endphp
                     <tr>
-                        <td>
-                            {{ $assessment->title }}
-                            <small class="text-muted">({{ __($assessment->grade_type->label()) }})</small>
-                        </td>
+                        <th scope="row">
+                            <i 
+                                class="{{ $assessment->type->icon() }} me-2"
+                                title="{{ __($assessment->type->label()) }}"
+                            ></i>
+                            <i 
+                                class="{{ $assessment->grade_type->icon() }} me-2"
+                                title="{{ __($assessment->grade_type->label()) }}"
+                            ></i>
+                            <a
+                                href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}"
+                                title="{{ __('Ver evaluación') }}"
+                                class="text-decoration-none"
+                            >
+                                {{ $assessment->title }}
+                            </a>
+                        </th>
                         <td><x-grade-label :$grade /></td>
                         <td>{{ $grade?->comment ?? '' }}</td>
                         <td>

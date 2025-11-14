@@ -44,8 +44,16 @@
                             {{ __('Alumno') }}
                         </th>
                         @foreach ($assessments as $assessment)
-                            <th scope="col">
-                                <a href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}">
+                            <th scope="col" class="text-center">
+                                <i
+                                    class="{{ $assessment->grade_type->icon() }}"
+                                    title="{{ __($assessment->grade_type->label()) }}"
+                                ></i>
+                                <a
+                                    href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}"
+                                    title="{{ __('Ver evaluación') }}"
+                                    class="text-decoration-none"
+                                >
                                     {{ $assessment->title }}
                                 </a>
                             </th>
@@ -56,14 +64,21 @@
                 <x-slot:rows>
                     @foreach ($students as $student)
                         <tr>
-                            <td>
-                                <a href="{{ route('teacher.courses.students.show', [ 'course' => $course, 'student' => $student ]) }}">
+                            <th
+                                scope="row"
+                                class="align-middle"
+                            >
+                                <a
+                                    href="{{ route('teacher.courses.students.show', [ 'course' => $course, 'student' => $student ]) }}"
+                                    title="{{ __('Ver perfil del alumno') }}"
+                                    class="text-decoration-none"
+                                >
                                     {{ $student->name }}
                                 </a>
-                            </td>
+                            </th>
 
                             @foreach ($assessments as $assessment)
-                                <td class="align-middle">
+                                <td class="align-middle text-center" style="min-width: 160px;">
                                     @php
                                         // get grade keyed by "gradable_id-assessment_id"
                                         $gradeKey = $student->id . '-' . $assessment->id;

@@ -16,4 +16,13 @@ enum CheckTypeEnum: string
             self::DirectoryExists => __('Directorio'),
         };
     }
+
+    public function icon(): string
+    {
+        return match ($this) {
+            self::GitHubUserExists => 'bi bi-person-check',
+            self::RepositoryExists => 'bi bi-clipboard-check',
+            self::DirectoryExists => 'bi bi-folder-check',
+        };
+    }
 }
