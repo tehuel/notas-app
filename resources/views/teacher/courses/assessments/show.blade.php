@@ -31,12 +31,18 @@
                 <div class="col-md-6">
                     <p class="m-0">
                         <strong>{{ __('Nota:') }}</strong>
-                        <i class="{{ $assessment->grade_type->icon() }}"></i>
+                        <i 
+                            class="{{ $assessment->grade_type->icon() }}" 
+                            title="{{ __($assessment->grade_type->label()) }}"
+                        ></i>
                         {{ __($assessment->grade_type->label()) }}
                     </p>
                     <p class="m-0">
                         <strong>{{ __('Tipo:') }}</strong>
-                        <i class="{{ $assessment->type->icon() }}"></i>
+                        <i
+                            class="{{ $assessment->type->icon() }}" 
+                            title="{{ __($assessment->type->label()) }}"
+                        ></i>
                         {{ __($assessment->type->label()) }}
                     </p>
                 </div>
@@ -55,7 +61,10 @@
                                     @endphp
                                     @if ($enabled)
                                         <li class="mb-1">
-                                            <i class="{{ $checkType->icon() }}"></i>
+                                            <i
+                                                class="{{ $checkType->icon() }}"
+                                                title="{{ __($checkType->label()) }}"
+                                            ></i>
                                             {{ __($checkType->label()) }}
                                         </li>
                                     @endif
@@ -87,7 +96,10 @@
                             <th scope="col">{{ __('Alumno') }}</th>
                             <th scope="col">
                                 {{ __('Nota') }}
-                                <i class="{{ $assessment->grade_type->icon() }} me-2" title="{{ __($assessment->grade_type->label()) }}"></i>
+                                <i
+                                    class="{{ $assessment->grade_type->icon() }} me-2" 
+                                    title="{{ __($assessment->grade_type->label()) }}"
+                                ></i>
                             </th>
                             <th scope="col">{{ __('Comentario') }}</th>
                             <th scope="col">{{ __('Acciones') }}</th>

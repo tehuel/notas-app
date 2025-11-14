@@ -45,12 +45,15 @@
                         </th>
                         @foreach ($assessments as $assessment)
                             <th scope="col" class="text-center">
+                                <i
+                                    class="{{ $assessment->grade_type->icon() }}"
+                                    title="{{ __($assessment->grade_type->label()) }}"
+                                ></i>
                                 <a
                                     href="{{ route('teacher.courses.assessments.show', [$course, $assessment]) }}"
                                     title="{{ __('Ver evaluación') }}"
                                     class="text-decoration-none"
                                 >
-                                    <i class="{{ $assessment->grade_type->icon() }}"></i>
                                     {{ $assessment->title }}
                                 </a>
                             </th>

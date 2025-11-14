@@ -65,7 +65,10 @@
                                     @if(old('grade_type', $assessment->grade_type ?? '') === $grade_type) checked @endif
                                 >
                                 <span>
-                                    <i class="{{ $grade_type->icon() }} me-1" title="{{ __($grade_type->label()) }}"></i>
+                                    <i
+                                        class="{{ $grade_type->icon() }} me-1"
+                                        title="{{ __($grade_type->label()) }}"
+                                    ></i>
                                     {{ __($grade_type->label()) }}
                                 </span>
                             </label>
@@ -90,7 +93,10 @@
                                     @if(old('type', $assessment->type ?? '') === $assessment_type) checked @endif
                                 >
                                 <span>
-                                    <i class="{{ $assessment_type->icon() }} me-1"></i>
+                                    <i 
+                                        class="{{ $assessment_type->icon() }} me-1"
+                                        title="{{ __($assessment_type->label()) }}"
+                                    ></i>
                                     {{ __($assessment_type->label()) }}
                                 </span>
                             </label>
@@ -118,7 +124,10 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-check-label flex-shrink-0" for="check_{{ $checkType->value }}">
-                                        <i class="{{ $checkType->icon() }} me-1"></i>
+                                        <i
+                                            class="{{ $checkType->icon() }} me-1"
+                                            title="{{ __($checkType->label()) }}"
+                                        ></i>
                                         {{ __($checkType->label()) }}
                                     </label>
                                 </div>
