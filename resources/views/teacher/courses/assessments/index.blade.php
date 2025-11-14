@@ -88,6 +88,7 @@
                                     type="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
+                                    aria-label="{{ __('Acciones') }}"
                                 >
                                     <i class="bi bi-three-dots-vertical"></i>
                                 </button>
