@@ -37,39 +37,20 @@
 
                             <!-- Actions dropdown -->
                             <div class="col-auto">
-                                <button
-                                    class="btn btn-sm rounded-circle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a
-                                            href="{{ route('teacher.courses.edit', $course) }}"
-                                            class="dropdown-item"
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                            {{ __('Editar') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <form method="POST" action="{{ route('teacher.courses.destroy', $course) }}">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button
-                                                type="submit"
-                                                class="dropdown-item text-danger"
-                                                onclick="return confirm('{{ __('¿Estás seguro de eliminar este curso?') }}')"
-                                            >
-                                                <i class="bi bi-trash"></i>
-                                                {{ __('Eliminar') }}
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                                <x-actions-dropdown>
+                                    <x-actions-dropdown.link-action
+                                        :route="route('teacher.courses.edit', $course)"
+                                        :label="__('Editar')"
+                                        icon="bi bi-pencil"
+                                    />
+                                    <x-actions-dropdown.form-action
+                                        :route="route('teacher.courses.destroy', $course)"
+                                        :label="__('Eliminar')"
+                                        icon="bi bi-trash"
+                                        :message="__('¿Estás seguro de eliminar este curso?')"
+                                        class="text-danger"
+                                    />
+                                </x-actions-dropdown>
                             </div>
 
                             <!-- Course description -->
