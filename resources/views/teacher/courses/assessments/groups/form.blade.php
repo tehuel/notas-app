@@ -64,39 +64,27 @@ document.addEventListener('alpine:init', () => {
                             <th>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <span x-text="group.title"></span>
-                                    <button
-                                        class="btn btn-sm rounded-circle"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a
-                                                href="#"
-                                                class="dropdown-item"
-                                                @click.prevent="(() => {
-                                                    const newTitle = prompt('{{ __('Nuevo título') }}', group.title);
-                                                    if (newTitle !== null && newTitle.trim() !== '') group.title = newTitle.trim();
-                                                })()"
-                                            >
-                                                {{ __('Renombrar') }}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="#"
-                                                class="dropdown-item text-danger"
-                                                @click.prevent="(() => {
-                                                    if (confirm('{{ __('¿Eliminar este grupo?') }}')) removeGroup(index);
-                                                })()"
-                                            >
-                                                {{ __('Eliminar') }}
-                                            </a>
-                                        </li>
-                                    </ul>
+
+                                    <x-actions-dropdown>
+                                        <x-actions-dropdown.link-action
+                                            route="#"
+                                            :label="__('Renombrar')"
+                                            icon="bi bi-pencil"
+                                            @click.prevent="(() => {
+                                                const newTitle = prompt('{{ __('Nuevo título') }}', group.title);
+                                                if (newTitle !== null && newTitle.trim() !== '') group.title = newTitle.trim();
+                                            })()"
+                                        />
+                                        <x-actions-dropdown.link-action
+                                            route="#"
+                                            :label="__('Eliminar')"
+                                            icon="bi bi-trash"
+                                            @click.prevent="(() => {
+                                                if (confirm('{{ __('¿Eliminar este grupo?') }}')) removeGroup(index);
+                                            })()"
+                                            class="text-danger"
+                                        />
+                                    </x-actions-dropdown>
                                 </div>
                             </th>
                         </template>

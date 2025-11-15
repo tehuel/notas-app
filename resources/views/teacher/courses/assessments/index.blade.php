@@ -83,40 +83,20 @@
 
                             <!-- Actions dropdown -->
                             <div class="col-auto">
-                                <button
-                                    class="btn btn-sm rounded-circle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    aria-label="{{ __('Acciones') }}"
-                                >
-                                    <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a
-                                            href="{{ route('teacher.courses.assessments.edit', [$course, $assessment]) }}"
-                                            class="dropdown-item"
-                                        >
-                                            <i class="bi bi-pencil"></i>
-                                            {{ __('Editar') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <form method="POST" action="{{ route('teacher.courses.assessments.destroy', [$course, $assessment]) }}">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button
-                                                type="submit"
-                                                class="dropdown-item text-danger"
-                                                onclick="return confirm('{{ __('¿Estás seguro de eliminar esta evaluación?') }}')"
-                                            >
-                                                <i class="bi bi-trash"></i>
-                                                {{ __('Eliminar') }}
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
+                                <x-actions-dropdown>
+                                    <x-actions-dropdown.link-action
+                                        :route="route('teacher.courses.assessments.edit', [$course, $assessment])"
+                                        :label="__('Editar')"
+                                        icon="bi bi-pencil"
+                                    />
+                                    <x-actions-dropdown.form-action
+                                        :route="route('teacher.courses.assessments.destroy', [$course, $assessment])"
+                                        :label="__('Eliminar')"
+                                        icon="bi bi-trash"
+                                        :message="__('¿Estás seguro de eliminar esta evaluación?')"
+                                        class="text-danger"
+                                    />
+                                </x-actions-dropdown>
                             </div>
                         </div>
                     </li>
