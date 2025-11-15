@@ -131,14 +131,16 @@
                                         {{ __($checkType->label()) }}
                                     </label>
                                 </div>
-                                <div class="col-12 col-sm order-sm-0">
-                                    <input
-                                        type="text"
-                                        name="checks[{{ $checkType->value }}][config]"
-                                        class="form-control mt-1"
-                                        value="{{ old('checks.' . $checkType->value . '.config', $assessment->checks[$checkType->value]['config'] ?? '') }}"
-                                    >
-                                </div>
+                                @if($checkType->requiresConfig())
+                                    <div class="col-12 col-sm order-sm-0">
+                                        <input
+                                            type="text"
+                                            name="checks[{{ $checkType->value }}][config]"
+                                            class="form-control mt-1"
+                                            value="{{ old('checks.' . $checkType->value . '.config', $assessment->checks[$checkType->value]['config'] ?? '') }}"
+                                        >
+                                    </div>
+                                @endif
                             </div>
                         </li>
                     @endforeach
