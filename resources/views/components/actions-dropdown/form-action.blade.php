@@ -1,9 +1,9 @@
-@props(['route', 'label', 'icon' => null, 'message' => null])
+@props(['route', 'label', 'icon' => null, 'message' => null, 'method' => 'DELETE'])
 
 <li>
     <form method="POST" action="{{ $route }}">
         {{ csrf_field() }}
-        {{ method_field('DELETE') }}
+        {{ method_field($method) }}
         <button
             type="submit"
             {{ $attributes->merge(['class' => 'dropdown-item']) }}
