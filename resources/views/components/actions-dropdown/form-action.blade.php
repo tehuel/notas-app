@@ -1,4 +1,4 @@
-@props(['route', 'label', 'icon' => null, 'message'])
+@props(['route', 'label', 'icon' => null, 'message' => null])
 
 <li>
     <form method="POST" action="{{ $route }}">
@@ -7,7 +7,9 @@
         <button
             type="submit"
             {{ $attributes->merge(['class' => 'dropdown-item']) }}
-            onclick="return confirm('{{ $message }}')"
+            @if ($message)
+                onclick="return confirm('{{ $message }}')"
+            @endif
         >
             @if ($icon)
                 <i class="{{ $icon }}"></i>
