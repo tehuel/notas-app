@@ -25,4 +25,13 @@ enum CheckTypeEnum: string
             self::DirectoryExists => 'bi bi-folder-check',
         };
     }
+
+    public function requiresConfig(): bool
+    {
+        return match ($this) {
+            self::GitHubUserExists => false,
+            self::RepositoryExists => false,
+            self::DirectoryExists => true,
+        };
+    }
 }
