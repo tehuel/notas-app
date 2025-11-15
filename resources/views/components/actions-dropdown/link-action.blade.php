@@ -1,4 +1,4 @@
-@props(['route', 'label', 'icon'])
+@props(['route', 'label', 'icon' => null])
 
 <li>
     <a

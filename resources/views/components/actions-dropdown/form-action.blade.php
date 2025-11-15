@@ -1,4 +1,4 @@
-@props(['route', 'label', 'icon', 'message'])
+@props(['route', 'label', 'icon' => null, 'message'])
 
 <li>
     <form method="POST" action="{{ $route }}">
