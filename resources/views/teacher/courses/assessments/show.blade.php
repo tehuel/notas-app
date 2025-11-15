@@ -66,7 +66,7 @@
                                                 title="{{ __($checkType->label()) }}"
                                             ></i>
                                             {{ __($checkType->label()) }}
-                                            @if ($checkType->requiresConfig() && !empty($checkData['config']))
+                                            @if ($checkType->requiresConfig() && isset($checkData['config']) && $checkData['config'] !== '')
                                                 <code>{{ $checkData['config'] }}</code>
                                             @endif
                                         </li>
