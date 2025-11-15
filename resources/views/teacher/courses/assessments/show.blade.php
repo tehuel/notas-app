@@ -66,6 +66,9 @@
                                                 title="{{ __($checkType->label()) }}"
                                             ></i>
                                             {{ __($checkType->label()) }}
+                                            @if ($checkType->requiresConfig() && !empty($checkData['config']))
+                                                <code>{{ $checkData['config'] }}</code>
+                                            @endif
                                         </li>
                                     @endif
                                 @endforeach
